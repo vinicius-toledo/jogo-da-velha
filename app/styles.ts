@@ -5,54 +5,62 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
+    // backgroundColor será aplicada no componente
   },
+
   title: {
     fontSize: 32,
     fontWeight: "bold",
     marginBottom: 20,
+    // color virá do tema
   },
-  // ⬅️ NOVO ESTILO ADICIONADO PARA A MENSAGEM DE STATUS
+
   status: {
-    fontSize: 24, // Um tamanho bom para o status
+    fontSize: 24,
     fontWeight: "600",
     marginVertical: 15,
     textAlign: "center",
-    color: "#333", // Cor neutra para o status padrão (próximo jogador)
+    // color virá do tema
   },
+
   board: {
     width: 300,
     height: 300,
     flexDirection: "row",
     flexWrap: "wrap",
-    borderWidth: 2,
+    borderWidth: 2, // cor do border virá do tema
   },
+
   square: {
     width: "33.33%",
     height: "33.33%",
-    borderWidth: 1,
+    borderWidth: 1, // cor virá do tema
     justifyContent: "center",
     alignItems: "center",
   },
+
   mark: {
     fontSize: 40,
     fontWeight: "bold",
+    // color virá do tema
   },
+
   button: {
     marginTop: 30,
-    backgroundColor: "#000",
     padding: 15,
     borderRadius: 10,
+    // backgroundColor virá do tema
   },
+
   buttonText: {
-    color: "#fff",
     fontSize: 18,
+    // color virá do tema
   },
-  // Renomeado 'winner' para 'resultMessage' e ajustado para ser condicional em gameScreen.tsx
+
   winner: {
     marginTop: 20,
     fontSize: 28,
     fontWeight: "bold",
-    color: "green",
+    // color virá do tema
   },
 });

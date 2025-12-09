@@ -1,0 +1,9 @@
+import dark from "./dark";
+import light from "./light";
+
+export const themes = {
+  light,
+  dark,
+};
+
+export type ThemeType = keyof typeof themes;

@@ -1,6 +1,8 @@
-import React, { useMemo, useState } from "react"; // ⬅️ CORRIGIDO: Hooks importados por desestruturação
+import { ThemeContext } from "@/context/themeContext";
+import React, { useContext, useMemo, useState } from "react"; // ⬅️ CORRIGIDO: Hooks importados por desestruturação
 import { Text, TouchableOpacity, View } from "react-native";
 import { checkWinner } from "../logic/gameLogic";
+
 import { styles } from "../styles";
 
 // Define o tipo para o estado do tabuleiro
@@ -12,6 +14,8 @@ export default function GameScreen() {
     const [player, setPlayer] = useState<string>("X");
     const [winner, setWinner] = useState<string | null>(null);
     const [isDraw, setIsDraw] = useState<boolean>(false);
+    const { colors } = useContext(ThemeContext);
+
 
     function handlePress(index: number) {
         if (board[index] !== null || winner !== null || isDraw) return;
@@ -55,31 +59,36 @@ export default function GameScreen() {
     }, [winner, isDraw, player]);
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Jogo da Velha</Text>
+       <View style={[styles.container, { backgroundColor: colors.background }]}>
+  <Text style={[styles.title, { color: colors.text }]}>Jogo da Velha</Text>
 
-            {/* Usa styles.status (Assumindo que você o adicionou ao styles.ts) */}
-            <Text style={styles.status}>{statusMessage}</Text>
+  <Text style={[styles.status, { color: colors.text }]}>
+    {statusMessage}
+  </Text>
 
-            <View style={styles.board}>
-                {/* CORRIGIDO: Tipagem explícita de 'value' e 'index' */}
-                {board.map((value: string | null, index: number) => (
-                    <TouchableOpacity
-                        key={index}
-                        style={styles.square}
-                        onPress={() => handlePress(index)}
-                        disabled={!!winner || isDraw}
-                    >
-                        <Text style={styles.mark}>{value}</Text>
-                    </TouchableOpacity>
-                ))}
-            </View>
+  <View style={[styles.board, { borderColor: colors.text }]}>
+      {board.map((value, index) => (
+        <TouchableOpacity
+          key={index}
+          style={[styles.square, { borderColor: colors.text }]}
+          onPress={() => handlePress(index)}
+        >
+          <Text style={[styles.mark, { color: colors.text }]}>{value}</Text>
+        </TouchableOpacity>
+      ))}
+  </View>
 
-            {(winner || isDraw || board.some(cell => cell !== null)) && (
-                <TouchableOpacity style={styles.button} onPress={resetGame}>
-                    <Text style={styles.buttonText}>Reiniciar Jogo</Text>
-                </TouchableOpacity>
-            )}
-        </View>
+  {(winner || isDraw || board.some(cell => cell !== null)) && (
+    <TouchableOpacity
+      style={[styles.button, { backgroundColor: colors.text }]}
+      onPress={resetGame}
+    >
+      <Text style={[styles.buttonText, { color: colors.background }]}>
+        Reiniciar Jogo
+      </Text>
+    </TouchableOpacity>
+  )}
+</View>
+
     );
 }
