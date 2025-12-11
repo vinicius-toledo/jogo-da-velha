@@ -63,4 +63,14 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     // color virá do tema
   },
+
+  section: {
+  width: "100%",
+  borderWidth: 2,
+  borderColor: "#888",
+  padding: 20,
+  borderRadius: 12,
+  marginVertical: 10,
+},
+
 });

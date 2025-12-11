@@ -1,10 +1,18 @@
 import { ThemeContext } from "@/context/themeContext";
 import { Link } from "expo-router";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+
+import ModeSelector from "../components/modeSelector";
+import SymbolSelector from "../components/symbolSelector";
+
+import { styles } from "../styles";
 
 export default function Home() {
   const { colors } = useContext(ThemeContext);
+
+  const [mode, setMode] = useState("computador");
+  const [symbol, setSymbol] = useState("aleatorio");
 
   return (
     <View
@@ -13,6 +21,7 @@ export default function Home() {
         backgroundColor: colors.background,
         justifyContent: "center",
         alignItems: "center",
+        paddingHorizontal: 20,
       }}
     >
       <Text
@@ -20,13 +29,30 @@ export default function Home() {
           fontSize: 32,
           fontWeight: "bold",
           marginBottom: 20,
+          marginTop: 20,
           color: colors.text,
         }}
       >
         Jogo da Velha
       </Text>
 
-      <Link href="/screens/gameScreen" asChild>
+      {/* Seção do modo */}
+      <View style={styles.section}>
+        <ModeSelector mode={mode} setMode={setMode} />
+      </View>
+
+      {/* Seção dos símbolos */}
+      <View style={styles.section}>
+        <SymbolSelector symbol={symbol} setSymbol={setSymbol} />
+      </View>
+
+      <Link
+        href={{
+          pathname: "/screens/gameScreen",
+          params: { mode, symbol },
+        }}
+        asChild
+      >
         <TouchableOpacity
           style={{
             backgroundColor: colors.text,

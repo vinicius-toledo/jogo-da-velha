@@ -1,7 +1,7 @@
 import { ThemeContext } from "@/context/themeContext";
 import React, { useContext, useMemo, useState } from "react"; // ⬅️ CORRIGIDO: Hooks importados por desestruturação
 import { Text, TouchableOpacity, View } from "react-native";
-import { checkWinner } from "../logic/gameLogic";
+import { checkWinner } from "../../service/gameLogic";
 
 import { styles } from "../styles";
 
