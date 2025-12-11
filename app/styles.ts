@@ -73,4 +73,29 @@ export const styles = StyleSheet.create({
   marginVertical: 10,
 },
 
+backContainer: {
+    width: "35%",
+    paddingHorizontal: 16,
+    paddingTop: 40,
+    position: "absolute",
+    top: 10,
+    left: 10,
+},
+
+backButton: {
+  flexDirection: "row",
+  alignItems: "center",
+  paddingVertical: 8,
+  paddingHorizontal: 14,
+  borderRadius: 8,
+},
+
+
+backButtonText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "left",
+},
+
+
 });
