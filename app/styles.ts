@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor será aplicada no componente
+    
   },
 
   title: {
@@ -49,7 +49,6 @@ export const styles = StyleSheet.create({
     marginTop: 30,
     padding: 15,
     borderRadius: 10,
-    // backgroundColor virá do tema
   },
 
   buttonText: {
@@ -96,6 +95,13 @@ backButtonText: {
     fontWeight: "bold",
     textAlign: "left",
 },
+
+background: {
+  flex: 1,
+  width: "100%",
+  height: "100%",
+},
+
 
 
 });

@@ -141,7 +141,8 @@ export default function GameScreen() {
   }, [winner, isDraw, current]);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+ <View style={styles.container}>
+
 
       {/* BOTÃO DE VOLTAR */}
 <View style={styles.backContainer}>

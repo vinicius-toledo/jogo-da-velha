@@ -1,7 +1,7 @@
 import { ThemeContext, ThemeProvider } from "@/context/themeContext";
 import { Slot } from "expo-router";
 import { useContext } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ImageBackground, Text, TouchableOpacity } from "react-native";
 
 function ThemeToggleButton() {
   const { toggleTheme, theme, colors } = useContext(ThemeContext);
@@ -26,13 +26,25 @@ function ThemeToggleButton() {
   );
 }
 
+function LayoutContent() {
+  const { images } = useContext(ThemeContext);
+
+  return (
+    <ImageBackground
+      source={images.background}
+      style={{ flex: 1 }}
+      resizeMode="cover"
+    >
+      <Slot />
+      <ThemeToggleButton />
+    </ImageBackground>
+  );
+}
+
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <View style={{ flex: 1 }}>
-        <Slot />
-        <ThemeToggleButton />
-      </View>
+      <LayoutContent />
     </ThemeProvider>
   );
 }

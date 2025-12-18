@@ -3,15 +3,19 @@ import { createContext, ReactNode, useState } from "react";
 
 type ThemeContextType = {
   theme: ThemeType;
-  colors: typeof themes.light;
+  colors: {
+    background: string;
+    text: string;
+  };
+  images: {
+    background: any;
+  };
   toggleTheme: () => void;
 };
 
-export const ThemeContext = createContext<ThemeContextType>({
-  theme: "light",
-  colors: themes.light,
-  toggleTheme: () => {},
-});
+export const ThemeContext = createContext<ThemeContextType>(
+  {} as ThemeContextType
+);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<ThemeType>("light");
@@ -24,7 +28,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     <ThemeContext.Provider
       value={{
         theme,
-        colors: themes[theme],
+        colors: themes[theme].colors,
+        images: themes[theme].images,
         toggleTheme,
       }}
     >

@@ -18,7 +18,7 @@ export default function Home() {
     <View
       style={{
         flex: 1,
-        backgroundColor: colors.background,
+        // backgroundColor: colors.background,
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: 20,
