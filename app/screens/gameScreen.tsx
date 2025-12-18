@@ -15,9 +15,10 @@ export default function GameScreen() {
   const { colors } = useContext(ThemeContext);
 
   // Recebe params vindos do Home (ex: mode="computador", symbol="aleatorio"|"x"|"o")
-  const params = useLocalSearchParams() as { mode?: string; symbol?: string };
+  const params = useLocalSearchParams() as { mode?: string; symbol?: string, starter?: string };
   const mode = params.mode ?? "local";     // padrão: local (jogador vs jogador)
   const symbolParam = (params.symbol ?? "x").toString().toLowerCase(); // "aleatorio"|"x"|"o"
+  const starterParam = (params.starter ?? "aleatorio").toString().toLowerCase(); // "x"|"o"|"aleatorio"
 
   // estado do tabuleiro e controle do jogo
   const [board, setBoard] = useState<BoardState>(Array(9).fill(null));
@@ -29,26 +30,34 @@ export default function GameScreen() {
   // interpretamos symbolParam: "x" => humano joga X; "o" => humano joga O; "aleatorio" => escolhe aleatório no início
   const [human, setHuman] = useState<string>("X");
   const [ai, setAi] = useState<string>("O");
+  const [starterSymbol, setStarterSymbol] = useState<"X" | "O">("X");
+
 
   // Inicializa símbolos e quem começa (executa uma vez)
-  useEffect(() => {
-    let humanSymbol = "X";
+useEffect(() => {
+  let humanSymbol: "X" | "O" = "X";
 
-    if (symbolParam === "x") humanSymbol = "X";
-    else if (symbolParam === "o") humanSymbol = "O";
-    else if (symbolParam === "aleatorio") humanSymbol = Math.random() > 0.5 ? "X" : "O";
+  if (symbolParam === "x") humanSymbol = "X";
+  else if (symbolParam === "o") humanSymbol = "O";
+  else humanSymbol = Math.random() > 0.5 ? "X" : "O";
 
-    setHuman(humanSymbol);
-    setAi(humanSymbol === "X" ? "O" : "X");
+  setHuman(humanSymbol);
+  setAi(humanSymbol === "X" ? "O" : "X");
 
-    // quem começa? normalmente X começa. Se o humano não for X e o modo for computador,
-    // a IA deve jogar primeiro (pois escolhemos humanSymbol e se humanSymbol === "O", X = AI)
-    setCurrent("X");
-    setBoard(Array(9).fill(null));
-    setWinner(null);
-    setIsDraw(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // executa apenas no mount
+  let start: "X" | "O" = "X";
+
+  if (starterParam === "x") start = "X";
+  else if (starterParam === "o") start = "O";
+  else start = Math.random() > 0.5 ? "X" : "O";
+
+  setStarterSymbol(start);
+  setCurrent(start);
+
+  setBoard(Array(9).fill(null));
+  setWinner(null);
+  setIsDraw(false);
+}, []);
+
 
   // Quando o board muda, verificar vitória/empate
   useEffect(() => {
@@ -116,23 +125,17 @@ export default function GameScreen() {
   }
 
   // Reinicia o jogo (mantendo as escolhas de símbolo/mode)
-  function resetGame() {
-    setBoard(Array(9).fill(null));
-    setWinner(null);
-    setIsDraw(false);
-    setCurrent("X");
-    // se o símbolo foi aleatório, redecidir quem é humano/ai
-    if (symbolParam === "aleatorio") {
-      const humanSymbol = Math.random() > 0.5 ? "X" : "O";
-      setHuman(humanSymbol);
-      setAi(humanSymbol === "X" ? "O" : "X");
-      setCurrent("X");
-    } else {
-      setHuman(symbolParam === "o" ? "O" : "X");
-      setAi(symbolParam === "o" ? "X" : "O");
-      setCurrent("X");
-    }
-  }
+function resetGame() {
+  const nextStarter = starterSymbol === "X" ? "O" : "X";
+
+  setStarterSymbol(nextStarter);
+  setCurrent(nextStarter);
+
+  setBoard(Array(9).fill(null));
+  setWinner(null);
+  setIsDraw(false);
+}
+
 
   const statusMessage = useMemo(() => {
     if (winner) return `Vencedor: ${winner}`;

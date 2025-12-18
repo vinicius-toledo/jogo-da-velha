@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 import ModeSelector from "../components/modeSelector";
+import StarterSelector from "../components/startSelector";
 import SymbolSelector from "../components/symbolSelector";
 
 import { styles } from "../styles";
@@ -13,6 +14,8 @@ export default function Home() {
 
   const [mode, setMode] = useState("computador");
   const [symbol, setSymbol] = useState("aleatorio");
+  const [ starter, setStarter ] = useState<"x" | "o" | "aleatorio">("aleatorio");
+  
 
   return (
     <View
@@ -46,10 +49,15 @@ export default function Home() {
         <SymbolSelector symbol={symbol} setSymbol={setSymbol} />
       </View>
 
+      {/* Seção de quem começa */}
+      <View style={styles.section}>
+        <StarterSelector starter={starter} setStarter={setStarter} />
+      </View>
+
       <Link
         href={{
           pathname: "/screens/gameScreen",
-          params: { mode, symbol },
+          params: { mode, symbol, starter },
         }}
         asChild
       >
