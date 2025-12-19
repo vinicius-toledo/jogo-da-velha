@@ -2,12 +2,18 @@ import { ThemeContext } from "@/context/themeContext";
 import { useContext } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
+// ✅ Tipo correto
+export type Symbol = "aleatorio" | "x" | "o";
+
 export type SymbolSelectorProps = {
-  symbol: string;                     // "aleatorio", "x" ou "o"
-  setSymbol: (value: string) => void; // função que atualiza o estado no Home
+  symbol: Symbol;
+  setSymbol: React.Dispatch<React.SetStateAction<Symbol>>;
 };
 
-export default function SymbolSelector({ symbol, setSymbol }: SymbolSelectorProps) {
+export default function SymbolSelector({
+  symbol,
+  setSymbol,
+}: SymbolSelectorProps) {
   const { colors } = useContext(ThemeContext);
 
   return (
@@ -23,80 +29,35 @@ export default function SymbolSelector({ symbol, setSymbol }: SymbolSelectorProp
         Escolha o símbolo
       </Text>
 
-      <View
-        style={{
-          flexDirection: "row",
-          gap: 15,
-        }}
-      >
-        {/* ALEATÓRIO */}
-        <TouchableOpacity
-          onPress={() => setSymbol("aleatorio")}
-          style={{
-            backgroundColor: symbol === "aleatorio" ? colors.text : "transparent",
-            paddingVertical: 12,
-            paddingHorizontal: 20,
-            borderRadius: 10,
-            borderWidth: 2,
-            borderColor: colors.text,
-          }}
-        >
-          <Text
+      <View style={{ flexDirection: "row", gap: 15 }}>
+        {(["aleatorio", "x", "o"] as Symbol[]).map((value) => (
+          <TouchableOpacity
+            key={value}
+            onPress={() => setSymbol(value)}
             style={{
-              color: symbol === "aleatorio" ? colors.background : colors.text,
-              fontSize: 16,
-              fontWeight: "600",
+              backgroundColor:
+                symbol === value ? colors.text : "transparent",
+              paddingVertical: 12,
+              paddingHorizontal: 20,
+              borderRadius: 10,
+              borderWidth: 2,
+              borderColor: colors.text,
             }}
           >
-            ALEATÓRIO
-          </Text>
-        </TouchableOpacity>
-
-        {/* X */}
-        <TouchableOpacity
-          onPress={() => setSymbol("x")}
-          style={{
-            backgroundColor: symbol === "x" ? colors.text : "transparent",
-            paddingVertical: 12,
-            paddingHorizontal: 20,
-            borderRadius: 10,
-            borderWidth: 2,
-            borderColor: colors.text,
-          }}
-        >
-          <Text
-            style={{
-              color: symbol === "x" ? colors.background : colors.text,
-              fontSize: 16,
-              fontWeight: "600",
-            }}
-          >
-            X
-          </Text>
-        </TouchableOpacity>
-
-        {/* O */}
-        <TouchableOpacity
-          onPress={() => setSymbol("o")}
-          style={{
-            backgroundColor: symbol === "o" ? colors.text : "transparent",
-            paddingVertical: 12,
-            paddingHorizontal: 20,
-            borderRadius: 10,
-            borderWidth: 2,
-            borderColor: colors.text,
-          }}
-        >
-          <Text
-            style={{
-              color: symbol === "o" ? colors.background : colors.text,
-              fontSize: 16,
-              fontWeight: "600",
-            }}
-          >
-            O
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                color:
+                  symbol === value
+                    ? colors.background
+                    : colors.text,
+                fontSize: 16,
+                fontWeight: "600",
+              }}
+            >
+              {value.toUpperCase()}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
     </View>
   );

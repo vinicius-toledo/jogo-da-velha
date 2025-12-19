@@ -2,9 +2,12 @@ import { ThemeContext } from "@/context/themeContext";
 import { useContext } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
+// ✅ Tipo correto
+export type Mode = "computador" | "jogador";
+
 export type ModeSelectorProps = {
-  mode: string;                  // opção escolhida: "computador" ou "jogador"
-  setMode: (value: string) => void;  // função para atualizar o estado no Home
+  mode: Mode;
+  setMode: React.Dispatch<React.SetStateAction<Mode>>;
 };
 
 export default function ModeSelector({ mode, setMode }: ModeSelectorProps) {
@@ -23,17 +26,12 @@ export default function ModeSelector({ mode, setMode }: ModeSelectorProps) {
         Escolha o modo
       </Text>
 
-      <View
-        style={{
-          flexDirection: "row",
-          gap: 15,
-        }}
-      >
-        {/* Botão Computador */}
+      <View style={{ flexDirection: "row", gap: 15 }}>
         <TouchableOpacity
           onPress={() => setMode("computador")}
           style={{
-            backgroundColor: mode === "computador" ? colors.text : "transparent",
+            backgroundColor:
+              mode === "computador" ? colors.text : "transparent",
             paddingVertical: 12,
             paddingHorizontal: 20,
             borderRadius: 10,
@@ -43,7 +41,10 @@ export default function ModeSelector({ mode, setMode }: ModeSelectorProps) {
         >
           <Text
             style={{
-              color: mode === "computador" ? colors.background : colors.text,
+              color:
+                mode === "computador"
+                  ? colors.background
+                  : colors.text,
               fontSize: 16,
               fontWeight: "600",
             }}
@@ -52,11 +53,11 @@ export default function ModeSelector({ mode, setMode }: ModeSelectorProps) {
           </Text>
         </TouchableOpacity>
 
-        {/* Botão Jogador */}
         <TouchableOpacity
           onPress={() => setMode("jogador")}
           style={{
-            backgroundColor: mode === "jogador" ? colors.text : "transparent",
+            backgroundColor:
+              mode === "jogador" ? colors.text : "transparent",
             paddingVertical: 12,
             paddingHorizontal: 20,
             borderRadius: 10,
@@ -66,7 +67,10 @@ export default function ModeSelector({ mode, setMode }: ModeSelectorProps) {
         >
           <Text
             style={{
-              color: mode === "jogador" ? colors.background : colors.text,
+              color:
+                mode === "jogador"
+                  ? colors.background
+                  : colors.text,
               fontSize: 16,
               fontWeight: "600",
             }}
