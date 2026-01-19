@@ -4,6 +4,6 @@ export default {
     text: "#000000",
   },
   images: {
-    background: require("../assets/images/background-light.png"),
+    background: require("../assets/images/backgroundLight.png"),
   },
 };
